@@ -1,0 +1,18 @@
+form fix, to let files work as they should -> https://stackoverflow.com/questions/2010747/empty-request-files-with-django-upload-forms
+Model populator -> https://stackoverflow.com/a/6092549/9559884
+Django CVS handlers from SO -> https://stackoverflow.com/a/24669572/9559884
+Strange CSV Handling -> https://stackoverflow.com/questions/2459979/how-to-import-csv-data-into-django-models
+gist about CVS separation -> https://gist.github.com/rg3915/85f1b600dd08619f76d94b7e41c3d04e
+pagination -> https://stackoverflow.com/questions/5907575/how-do-i-use-pagination-with-django-class-based-generic-listviews
+
+
+
+Django==2.2.4
+et-xmlfile==1.1.0
+openpyxl==3.0.7
+pytz==2021.1
+sqlparse==0.4.1
+stripe
+
+
+HTTPS je required pre stripe, otherwise the real payments should not be able to work

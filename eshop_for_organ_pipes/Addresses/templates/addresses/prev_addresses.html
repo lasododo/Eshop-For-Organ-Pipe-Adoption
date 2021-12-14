@@ -1,0 +1,37 @@
+{% if address_qs.exists %}
+    <form method="POST" action="{{ action_url }}"> {% csrf_token %}
+
+        {% if address_type %}
+            <input type="hidden" name="address_type" value="{{ address_type }}"/>
+        {% endif %}
+
+        {% if next_url %}
+            <input type="hidden" name="next" value="{{ next_url }}"/>
+        {% endif %}
+
+        {% for address in address_qs %}
+
+            <div class="py-2">
+                <label for="address-{{ address.id }}">
+                    <input id="address-{{ address.id }}" type="radio" name="billing_address"
+                           value="{{ address.id }}">
+                </label>
+                <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title my-2 px-lg-5 px-2">{{ address.city }} ({{ address.country }})</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Address:</b> {{ address.address_line_1 }}, {% if address.address_line_2 %} {{ address.address_line_2 }} {% endif %}</li>
+                      <li class="list-group-item"><b>City and Postal Code:</b> {{ address.city }} ({{ address.postal_code }})</li>
+                      <li class="list-group-item"><b>State and Country:</b> {{ address.state }} ({{ address.country }})</li>
+                    </ul>
+                  </div>
+
+            </div>
+
+        {% endfor %}
+        <div class="py-5">
+            <button class="btn btn-success" type="submit"> I am choosing this address</button>
+        </div>
+    </form>
+{% endif %}

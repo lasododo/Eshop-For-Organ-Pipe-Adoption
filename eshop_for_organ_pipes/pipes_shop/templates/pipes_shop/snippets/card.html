@@ -1,0 +1,30 @@
+<div class="card {{ instance.get_color_text }} mb-3 pi-draggable" style="background-color: {{ instance.get_color }}">
+    <div class="card-header">{{ instance.name }}</div>
+    <div class="card-body">
+        <h6 class="card-title" style="margin: 0; font-weight: normal"><b>Manual:</b> <i>{{ instance.manual }}</i></h6>
+        <h6 class="card-title" style="margin: 0; font-weight: normal"><b>Registry:</b> <i>{{ instance.registry }} </i></h6>
+        <h6 class="card-title" style="font-weight: normal"><b>Note:</b> <i>{{ instance.note }}</i></h6>
+        {% if instance.buyable and instance.buyer is None %}
+            <h6 class="card-text" style="margin: 0 0 10px">Not yet adopted</h6>
+            <h5 class="card-text" style="margin: 0 0 10px">Price: <b>{{ instance.price }}</b> CZK </h5>
+        {% elif instance.buyer is not None and instance.buyer.full_name is not None %}
+            <p class="card-text" style="margin: 0 0 10px">{% if instance.time_bought %} Adopted {% else %}
+                                        Reserved {% endif %}by <b>{% if instance.offline_buyer %} {{ instance.offline_buyer }} {% else %}{{ instance.buyer.full_name }} {% endif %}</b> on {{ instance.time_bought }}</p>
+        {% else %}
+            <p class="card-text" style="margin: 0 0 10px">{% if instance.time_bought %} Adopted {% else %}
+                                        Reserved {% endif %} by <b>{% if instance.offline_buyer %} {{ instance.offline_buyer }} {% else %}Anonymous {% endif %}</b> on {% if instance.time_bought %} {{ instance.time_bought }} {% else %}Not specified {% endif %}</p>
+        {% endif %}
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-12" style="margin-bottom: 4px">
+                    <a class="btn btn-light btn-block" href="{{ instance.get_absolute_url }}">View</a>
+                </div>
+                <div class="col-xl-8 col-12">
+                    {% if instance.buyable and instance.buyer is None %}
+                        {% include 'pipes_shop/snippets/update-cart.html' with pipe=instance cart=cart %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

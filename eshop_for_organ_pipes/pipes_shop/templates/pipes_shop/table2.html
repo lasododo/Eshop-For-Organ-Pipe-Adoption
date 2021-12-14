@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include 'search/filterboxes.html' %}
+
+
+<style>
+    .table-responsive
+{
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #000000;
+}
+</style>
+
+<div class="py-5">
+<div class="table-responsive text-center">
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                {% for obj in note %}
+                        <th style="padding-left: 1px; padding-right: 1px" class="text-center">{{obj.name}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for registry, other_dict in tab.items %}
+            <tr>
+                <th class="text-center"> {{registry}} </th>
+                {% for note, pipes in other_dict.items %}
+                    {% if pipes.val == "X" and pipes.pipe.buyable %}
+                        <td> <span> <a href='{{ pipes.pipe.get_absolute_url }}'><i class="fas fa-circle" style="color: {{pipes.pipe.get_color}};"></i> </a> </span> </td>
+                    {% elif pipes.val == "X" %}
+                        <td> <span> <a href='{{ pipes.pipe.get_absolute_url }}'><i class="fas fa-square" style="color: {{pipes.pipe.get_color}};"></i> </a> </span> </td>
+                    {% else %}
+                        <td> <i class="fas fa-ban"></i> </td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        <!--
+
+            -->
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="py-5 text-center" >
+    <div class="container">
+      <div class="row">
+        <div class="col-12" style="font-size: 24px;">
+          <h3>Thank you for your adoption.</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5 text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-left">
+          <h1 class="text-center"> Order Details:</h1>
+          <br>
+            <h3>
+                Order ID: {{ object.order_id }}
+            </h3>
+        <br>
+          <h3 class="text-left"> Billing Details: </h3>
+          <ul class="list-group list-group-flush d-block">
+            <li class="list-group-item">
+              <i class="fas fa-address-book text-primary mr-4"></i>
+              {{ object.billing_address.address_line_1 }} {{ object.billing_address.address_line_2 }}
+            </li>
+            <li class="list-group-item">
+              <i class="fas fa-city text-primary mr-3"></i>
+              {{ object.billing_address.city }}
+            </li>
+            <li class="list-group-item">
+              <i class="fas fa-mail-bulk text-primary mr-4"></i>
+              {{ object.billing_address.postal_code }}
+            </li>
+            <li class="list-group-item">
+              <i class="far fa-compass text-primary mr-4"></i>
+              {{ object.billing_address.state }}
+            </li>
+            <li class="list-group-item">
+              <i class="fas fa-flag text-primary mr-4"></i>
+              {{ object.billing_address.country }}
+            </li>
+          </ul>
+          <br>
+          <h3 class="text-left"> Payment Details: </h3>
+          <ul class="list-group list-group-flush text-left">
+              {% if object.payment_type == 'card' %} <li class="list-group-item">
+              <i class="fa fa-bookmark text-primary mr-2" aria-hidden="true"></i> Payment Method: <b>Payment via Card {{ billing_profile.default_card }}</b>  </li>
+              {% else %} <li class="list-group-item">
+              <i class="fa fa-bookmark text-primary mr-2" aria-hidden="true"></i> Payment Method: <b>Payment Via Bank Transfer.</b>
+            </li>
+              {% endif %} <li class="list-group-item">
+              <i class="fas fa-address-card text-primary mr-2" aria-hidden="true"></i> Total: <b>{{ object.order_total }}</b> CZK </li>
+          </ul>
+          <br>
+          <h3 class="text-left"> List of pipes: </h3>
+          <div class="card">
+            <div class="card-body"> {% for item in object.cart.pipes.all %}
+                <h5 class="card-title">{{ forloop.counter }}. <b>{{ item.name }}</b> {{ item.price }} CZK</h5> {% endfor %} <br>
+              <h4 class="card-subtitle my-2 text-right">
+                <b>Total: {{ object.order_total }}</b> CZK</h4>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

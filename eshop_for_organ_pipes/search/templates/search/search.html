@@ -1,0 +1,9 @@
+<form method="GET" class="search-form" action='{% url "search:search" %}'> {% csrf_token %}
+    <div class="py-4">
+        <label for="form13">Search everything:</label>
+        <input type="text" class="form-control" id="form13" name="q" placeholder="pipe C">
+    </div>
+    <div class="py-2 d-flex justify-content-center">
+        <button type="submit" class="btn btn-success">Search</button>
+    </div>
+</form>

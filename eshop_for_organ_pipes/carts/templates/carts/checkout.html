@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <style>
+            .icon_size { font-size: 3.2em; }
+
+        @media screen and (min-width: 770px) {
+            .icon_size { font-size: 5.2em; }
+        }
+
+        @media screen and (min-width: 970px) {
+            .icon_size { font-size: 7.2em; }
+        }
+
+        @media screen and (min-width: 1170px) {
+            .icon_size { font-size: 10.2em; }
+        }
+
+        @media screen and (min-width: 1400px) {
+            .icon_size { font-size: 14.2em; }
+        }
+
+        @media screen and (min-width: 2000px) {
+            .icon_size { font-size: 20.2em; }
+        }
+
+
+
+</style>
+
+    <div class="container">
+        <div class="row">
+
+            {% if billing_profile %}
+                {% if not object.billing_address %}
+                    <div class="col-12 text-center">
+                        <div class="py-5">
+                            <h1 class="text-center">
+                                <b> Add Billing Address </b>
+                            </h1>
+                        </div>
+                    </div>
+        </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                        <div class="py-3">
+                            <div class="container">
+                                <div class="row">
+                                    {% url "checkout_address_create_view" as checkout_address_create_view %}
+                                    {% include 'addresses/form.html' with form=address_form next_url=request.build_absolute_uri action_url=checkout_address_create_view address_type='billing' %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="py-4">
+                            <h3><b>Your already existing addresses: </b></h3>
+                            {% url "checkout_address_use_view" as checkout_address_use_view %}
+                            {% include 'addresses/prev_addresses.html' with address_qs=address_qs next_url=request.build_absolute_uri action_url=checkout_address_use_view address_type='billing' %}
+                        </div>
+                    </div>
+
+                {% elif not object.payment_type %}
+
+                    </div>
+
+                        <div class="row py-lg-5 py-2 px-5 text-center">
+                        </div>
+
+                        <div class="row py-lg-5 px-lg-5 text-center">
+                            <div class="col-md-1"></div>
+
+                                <div class="col-md-10">
+                                    <h3><b>Please choose one of the following payment methods:</b></h3>
+                                </div>
+
+                                <div class="col-md-1"></div>
+                        </div>
+
+
+                        <div class="row py-lg-0 py-1 px-1 text-center">
+
+                            <div class="col-6">
+                                <a href="{{ billing_profile.get_payment_method_url }}?next={{ request.build_absolute_uri }}">
+                                <div class="py-5 card">
+                                    <h3>Card Payment</h3>
+                                    <span class="glyphicon glyphicon-check">
+                                        <i class="fa fa-credit-card icon_size" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                                </a>
+                            </div>
+
+                            <div class="col-6">
+                                <a href="{% url "cart:bank_payment" %}">
+                                <div class="py-5 card">
+                                    <h3>Bank Payment</h3>
+                                    <span class="glyphicon glyphicon-check">
+                                        <i class="fa fa-university icon_size" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                                </a>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                {% else %}
+
+                        </div>
+                        <div class="py-lg-5 py-3"></div>
+                            <div class="py-2 row">
+                                 <div class="col-md-12">
+                                      <h2 class="text-center">Checkout Review</h2>
+                                        </div>
+                                    </div>
+
+                            <div class="py-2 row">
+                                <div class="col-md-8 py-4">
+                                    <div class="card px-2 py-2">
+                                    <h3 class="text-center"><b>Billing Address</b></h3>
+                                        <ul class="list-group list-group-flush d-block">
+                                            <li class="list-group-item">
+                                                <i class="fas fa-address-book text-primary mr-4"></i>
+                                                {{ object.billing_address.address_line_1 }} {{ object.billing_address.address_line_2 }}
+                                            </li>
+                                            <li class="list-group-item">
+                                                <i class="fas fa-city text-primary mr-3"></i>
+                                                {{ object.billing_address.city }}
+                                            </li>
+                                            <li class="list-group-item">
+                                                <i class="fas fa-mail-bulk text-primary mr-4"></i>
+                                                {{ object.billing_address.postal_code }}
+                                            </li>
+                                            <li class="list-group-item">
+                                                <i class="far fa-compass text-primary mr-4"></i>
+                                                {{ object.billing_address.state }}
+                                            </li>
+                                            <li class="list-group-item">
+                                                <i class="fas fa-flag text-primary mr-4"></i>
+                                                {{ object.billing_address.country }}
+                                            </li>
+                                            <li class="list-group-item"> </li>
+                                        </ul>
+
+                                        <a class="btn btn-primary" href="{% url "cart:clear" %}"> Reset checkout process</a>
+                                    </div>
+                                    <div class="px-2 py-4"> </div>
+                                    <div class="card px-2 py-2">
+                                    <h3 class="text-center"> <br> <b>Payment details</b></h3>
+                                        <ul class="list-group list-group-flush">
+                                            {% if object.payment_type == 'card' %}
+                                            <li class="list-group-item">
+                                                <i class="fa fa-bookmark text-primary mr-2" aria-hidden="true"></i>
+                                                Payment
+                                                Method:
+                                                <b>Payment via Card {{ billing_profile.default_card }}</b>
+                                                (<a href="{{ billing_profile.get_payment_method_url }}?next={{ request.build_absolute_uri }}">Change</a>)
+                                            </li>
+                                            {% else %}
+                                                <li class="list-group-item">
+                                                    <i class="fa fa-bookmark text-primary mr-2" aria-hidden="true"></i>
+                                                    Payment
+                                                    Method:
+                                                        <b>Payment Via Bank Transfer.</b>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fa fa-bookmark text-primary mr-2" aria-hidden="true"></i>
+                                                    Please send the money to this bank account
+                                                        <b>19261280571285/19247</b>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fa fa-bookmark text-primary mr-2" aria-hidden="true"></i>
+                                                    Add to "Message for beneficiary" or "Note" (or both):
+                                                        <b>{{ object.order_id }}</b>
+                                                </li>
+                                                <li class="list-group-item text-danger">
+                                                    <i class="fa fa-bookmark text-primary mr-2" aria-hidden="true"></i>
+                                                        <b>MAKE SURE THAT YOU WRITE IT CORRECTLY!!!</b>
+                                                </li>
+                                            {% endif %}
+                                            <li class="list-group-item">
+                                                <i class="fas fa-address-card text-primary mr-2" aria-hidden="true"></i>
+                                                Total: <b>{{ object.order_total }}</b> CZK
+                                            </li>
+                                            <li class="list-group-item"> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="py-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                {% for item in object.cart.pipes.all %}
+                                                    <h5 class="card-title">{{ forloop.counter }}. <b>{{ item.name }}</b>
+                                                    </h5>
+                                                    <h6 class="card-subtitle my-2 text-muted text-right">{{ item.price }}
+                                                        CZK</h6>
+                                                {% endfor %}
+                                            <br>
+                                                <h4 class="card-subtitle my-2 text-right">
+                                                    <b>{{ object.order_total }}</b> CZK</h4>
+                                            <br>
+                                            {% if object.payment_type == 'card' %}
+                                                <form method="POST" action=""> {% csrf_token %}
+                                                    <button class="btn btn-success btn-block" type="submit"> Pay Now! </button>
+                                                </form>
+                                            {% else %}
+                                                <h6 class="card-subtitle my-2 text-warning text-center">Pipes will be marked as adopted after the payment arrives to our system</h6>
+                                                <form method="POST" action=""> {% csrf_token %}
+                                                    <button class="btn btn-success btn-block" type="submit"> Payment sent </button>
+                                                </form>
+                                            {% endif %}
+                                            <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="py-lg-5 py-4"></div>
+
+                {% endif %}
+            {% else %}
+
+                </div>
+                </div>
+
+                {% include 'accounts/snippets/form-login.html' with form=login_form next_url=request.build_absolute_uri %}
+
+            {% endif %}
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block stripe %}
+
+    {% include 'base/generic-stripe-template.html' %}
+
+    {% include 'base/stripe-import.html' %}
+
+{% endblock %}

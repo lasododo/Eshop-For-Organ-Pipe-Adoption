@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- stripe form -->
+
+    <div class="py-lg-3 py-sm-4"></div>
+
+    <div class="container">
+
+        <div class="card text-dark bg-light">
+            <div class="row py-5 px-5">
+
+
+
+                <div class="col-md-1"></div>
+
+                <div class="col-md-10">
+                    <h3>Card Payment</h3>
+                    <div class="stripe-payment-form"
+                         data-token='{{ publish_key }}'
+                         data-next-url='{% if next_url %}{{ next_url }}{% endif %}'
+                         data-btn-title="Add card and go to checkout"
+                    > {% csrf_token %} </div>
+
+                </div>
+
+                <div class="col-md-1"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="py-lg-5 py-sm-4"></div>
+    <div class="py-5"></div>
+
+{% endblock %}
+
+{% block stripe %}
+
+    {% include 'base/generic-stripe-template.html' %}
+    {% include 'base/stripe-import.html' %}
+
+{% endblock %}

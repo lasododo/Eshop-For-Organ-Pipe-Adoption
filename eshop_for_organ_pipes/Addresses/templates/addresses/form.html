@@ -1,0 +1,28 @@
+<div class="col-md-12 p-4">
+    <h3 class="mb-3">Provide us your {{ address_type }} address</h3>
+    <form method='POST' action="
+                            {% if action_url %}
+                                {{ action_url }}
+                            {% else %}
+                                {% url 'login' %}
+                            {% endif %} ">
+
+        {% csrf_token %}
+
+        {% if address_type %}
+            <input type="hidden" name="address_type" value="{{ address_type }}"/>
+        {% endif %}
+
+        {% if next_url %}
+            <input type="hidden" name="next" value="{{ next_url }}"/>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-group mb-3">
+                {{ field }}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+</div>

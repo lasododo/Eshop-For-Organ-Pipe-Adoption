@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include 'search/filterboxes.html' %}
+
+
+<style>
+    .table-responsive
+{
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #000000;
+}
+</style>
+
+<div class="py-5">
+<div class="table-responsive">
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>#</th>
+                {% for obj in note %}
+                        <th>{{obj.name}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in tab %}
+            <tr>
+            {% for x in row %}
+                {% if x.val == "X" %}
+                    {% for w in x.pipe %}
+                        <th> <a href="{{ w.get_absolute_url }}" class="btn btn-secondary">A</a> </th>
+                    {% endfor %}
+                {% else %}
+                    <th> {{x.val}} </th>
+                {% endif %}
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    </div>
+
+{% endblock %}

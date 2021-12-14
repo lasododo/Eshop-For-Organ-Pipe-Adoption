@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="py text-center text-dark">
+        <h1> The following pipes have already been reserved. </h1>
+    </div>
+        <div class="py">
+            <div class="container">
+                <div class="row">
+                    <div class="table-responsive text-center">
+                        <table class="table cart-table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th style="padding-left: 1px; padding-right: 1px" class="text-center">pipe</th>
+                            </tr>
+                            </thead>
+                            <tbody class="cart-body">
+
+                            {% for item in pipes %}
+                                <tr class="cart-product">
+                                    <th class="text-center"> {{ forloop.counter }}</th>
+                                    <th class="text-center"><a href="{{ item.get_absolute_url }}"> {{ item.name }} </a></th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

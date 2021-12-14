@@ -1,0 +1,53 @@
+/*** RADIAL PROGRESS ***/
+/* Circumference = 2πr */
+/* π = 3.1415926535898 */
+/* r = 35 */
+svg.radial-progress {
+    height: auto;
+    max-width: 300px;
+    transform: rotate(-90deg);
+    width: 100%;
+}
+
+svg.radial-progress circle {
+    fill: rgba(255, 255, 255, 1);
+    stroke-dashoffset: 219.91148575129;
+    /* Circumference */
+    stroke-width: 5px;
+}
+
+svg.radial-progress circle.incomplete {
+    opacity: 0;
+}
+
+svg.radial-progress circle.complete {
+    stroke-dasharray: 219.91148575129;
+
+    /* Circumference */
+}
+
+svg.radial-progress text {
+    fill: #000000;
+    font: 400 1em/1 'Oswald', sans-serif;
+    font-size: 10px;
+    text-anchor: middle;
+}
+
+svg.radial-progress text.percentage-text {
+    fill: coral;
+    font: 400 1em/1 'Oswald', sans-serif;
+    font-size: 10px;
+    text-anchor: middle;
+}
+
+svg.radial-progress text.percentage-small {
+    fill: gray;
+    font: 50 1em/1 'Oswald', sans-serif;
+    font-size: 7px;
+    text-anchor: middle;
+}
+
+/*** COLORS ***/
+svg.radial-progress:nth-of-type(6n+1) circle {
+    stroke: #FF8C00;
+}

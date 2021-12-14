@@ -1,0 +1,10 @@
+<form class="product-add-form-ajax" method="POST" action='{%  url "cart:update" %}' data-endpoint='{%  url "cart:update" %}'> {% csrf_token %}
+    <input type="hidden" name="pipe_id" value="{{ pipe.id }}" />
+    <span class="submit-span">
+        {% if pipe in cart.pipes.all %}
+            <button class="btn btn-outline-danger bg-dark btn-block"> Remove from Cart <i class="fas fa-heart-broken" aria-hidden="true"></i> </button>
+        {% else %}
+            <button type="submit" class="btn btn-success btn-block">  Add to Cart <i class="fa fa-shopping-cart fa-fw" aria-hidden="true"></i> </button>
+        {% endif %}
+        </span>
+</form>

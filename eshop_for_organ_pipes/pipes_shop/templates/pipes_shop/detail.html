@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xl-3 col-md-1 col-sm-0"></div>
+                <div class="col-xl-6 col-md-10 col-sm-12">
+                    <div class="card pi-draggable text-center" draggable="true">
+                        <div class="card-header">
+                            <h5 class="my-3"> Organ Pipe Adoption </h5>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title py-3"><b>{{ object.name }}</b></h5>
+                            <p class="card-text">Manual: {{ object.manual }}</p>
+                            <p class="card-text">Registry: {{ object.registry }}</p>
+                            <p class="card-text">Note: {{ object.note }}</p>
+                            {% if object.buyer or not object.buyable %}
+                                {% if object.buyer.full_name %}
+                                    <p class="card-text"> {% if object.time_bought %} Adopted {% else %}
+                                        Reserved {% endif %}by: <b>{% if object.offline_buyer %} {{ object.offline_buyer }} {% else %}{{ object.buyer.full_name }} {% endif %}</b></p>
+                                {% else %}
+                                    <p class="card-text">{% if object.time_bought %} Adopted {% else %}
+                                        Reserved {% endif %} by: <b>{% if object.offline_buyer %} {{ object.offline_buyer }} {% else %}Anonymous {% endif %}</b></p>
+                                {% endif %}
+                            {% else %}
+                                <div class="mb-3">
+                                    {% include 'pipes_shop/snippets/update-cart.html' with pipe=object cart=cart %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if object.buyer or not object.buyable %}
+                            {% if object.time_bought %}
+                                <div class="card-footer text-muted"> Purchased {{ object.time_bought }}
+                                    ({{ object.time_bought|timesince }} ago)
+                                </div>
+                            {% else %}
+                                <div class="card-footer text-muted"> This Pipe is currently reserved</div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-1 col-sm-0"></div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

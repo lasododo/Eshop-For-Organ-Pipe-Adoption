@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<style>
+    .table-responsive
+{
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    border: 1px solid #000000;
+}
+</style>
+<div class="py-3 text-center" style="
+background-image: linear-gradient(to bottom, rgba(0, 0, 0, .75), rgba(0, 0, 0, .75)), url(https://arts.ufl.edu/site/assets/files/97186/university_auditorium_organ1.1840x1036p50x50.jpg);
+background-position: center center, center center;
+background-size: cover, cover;
+background-repeat: repeat, repeat;
+  background-attachment: fixed;">
+    <h3 class="text-white"><b>Organ pipe adoption</b></h3>
+
+    <div class="py-md-5 py-sm-2 text-white">
+          <h3 class="mt-2 mb-4">We have currently received this much on donations:</h3>
+               </div>
+          <div class="py-2">
+            <h1 class="text-white"> {{ manual_all_price }} CZK </h1>
+          </div>
+
+<div class="py-3"> </div>
+
+<style>
+    @media screen and (min-width: 770px) {
+    #mobile_only {
+        visibility: hidden;
+        clear: both;
+        display: none;
+        }
+    }
+
+    @media screen and (max-width: 771px) {
+    #pc_only {
+        visibility: hidden;
+        clear: both;
+        display: none;
+        }
+    }
+</style>
+
+  <div class="py-1 text-center">
+
+
+    <div class="container" id="pc_only">
+    {% if manuals.count < 6 %}
+    <!-- inspiration by -> https://www.jqueryscript.net/loading/Radial-Progress-Bar-jQuery-SVG-CSS3.html
+      <svg class="radial-progress" viewBox="0 0 80 80">
+        <circle class="incomplete" cx="40" cy="40" r="35"></circle>
+        <circle class="complete" cx="40" cy="40" r="35" style="stroke-dashoffset: {#  #} circle_val }};"></circle>
+        <text class="percentage" x="50%" y="57%" transform="matrix(0, 1, -1, 0, 80, 0)">{#  #} percentage }}%</text>
+      </svg>
+      -->
+        <div class="row">
+        {% for manual_item in manuals %}
+            <div class="col" style="padding-right: 2px; padding-left: 2px">
+                <a href="{{ manual_item.get_absolute_url }}">
+                    <svg class="radial-progress" viewBox="0 0 80 80">
+                        <circle class="incomplete" cx="40" cy="40" r="35" style="stroke-dashoffset: 0; stroke: chocolate;"></circle>
+                        {% if manual_item == manual %} {# request.path == manual_item.get_absolute_url #}
+                            <circle class="complete" cx="40" cy="40" r="35"
+                                style="stroke-dashoffset: {{ manual_item.get_fill_portion }}; stroke: rgba(0, 0, 0, 0.2); stroke-width: 7px; fill: coral">
+                            </circle>
+                            <circle class="complete" cx="40" cy="40" r="35"
+                                style="stroke-dashoffset: {{ manual_item.get_fill_portion }}; stroke: rgba(65, 65, 65, 0.25); stroke-width: 6px; fill: rgba(0, 0, 0, 0);">
+                            </circle>
+                            <circle class="complete" cx="40" cy="40" r="35"
+                                style="stroke-dashoffset: {{ manual_item.get_fill_portion }}; stroke: coral; fill: rgba(0, 0, 0, 0);">
+                            </circle>
+                            <text class="percentage-text" x="50%" y="40%" transform="matrix(0, 1, -1, 0, 80, 0)" style="fill: white"> {{ manual_item }} </text>
+                            <text class="percentage-small" x="50%" y="62%" transform="matrix(0, 1, -1, 0, 80, 0)" style="fill: lightgray"> Donated </text>
+                            <text class="percentage" x="50%" y="75%" transform="matrix(0, 1, -1, 0, 80, 0)"> {{ manual_item.get_percentage }}%</text>
+                        {% else %}
+                            <circle class="complete" cx="40" cy="40" r="35"
+                                style="stroke-dashoffset: {{ manual_item.get_fill_portion }}; stroke: coral;">
+                            </circle>
+                            <text class="percentage-text" x="50%" y="40%" transform="matrix(0, 1, -1, 0, 80, 0)"> {{ manual_item }} </text>
+                            <text class="percentage-small" x="50%" y="62%" transform="matrix(0, 1, -1, 0, 80, 0)"> Donated </text>
+                            <text class="percentage" x="50%" y="75%" transform="matrix(0, 1, -1, 0, 80, 0)"> {{ manual_item.get_percentage }}%</text>
+                        {% endif %}
+                    </svg>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+      <form class="d-flex justify-content-center">
+        <div class="form-group col-lg-4 col-12 ">
+          <select class="form-control" id="exampleFormControlSelect1">
+              {% for manual_item in manuals %}
+                    {% if manual_item == manual %}
+                        <option value="{{ manual_item.get_absolute_url }}" selected="selected"> {{ manual_item.name }} </option>
+                    {% else  %}
+                        <option value="{{ manual_item.get_absolute_url }}"> {{ manual_item.name }} </option>
+                    {% endif %}
+              {% endfor %}
+          </select>
+        </div>
+      </form>
+    {% endif %}
+    </div>
+
+  <div class="container" id="mobile_only">
+      <form class="d-flex justify-content-center">
+        <div class="form-group col-lg-4 col-12 ">
+          <select class="form-control bg-light" id="exampleFormControlSelect1">
+              {% for manual_item in manuals %}
+                    {% if manual_item == manual %}
+                        <option value="{{ manual_item.get_absolute_url }}" selected="selected"> {{ manual_item.name }} </option>
+                    {% else  %}
+                        <option value="{{ manual_item.get_absolute_url }}"> {{ manual_item.name }} </option>
+                    {% endif %}
+              {% endfor %}
+          </select>
+        </div>
+      </form>
+  </div>
+
+  </div>
+</div>
+
+  <div>
+    <div class="table-responsive text-center">
+      <table class="table" style="font-size: 11px;">
+        <thead>
+          <tr>
+              <th class="text-center">#</th>
+                {% for obj in note %}
+                        <th style="padding-left: 1px; padding-right: 1px;" class="text-center">{{obj.name}}</th>
+                {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+            {% for registry, other_dict in tab.items %}
+                <tr>
+                    <th class="text-center"> {{registry}} </th>
+                    {% for note, pipes in other_dict.items %}
+                        {% if pipes.val == "X" and pipes.pipe.buyable and pipes.pipe.is_reserved %}
+                            <th style="background-color: rgba({{pipes.pipe.get_color_rgb}}, 0.5);"> <span> <a href="{{ pipes.pipe.get_absolute_url }}"><i class="fa fa-user-o" style="color: black;" aria-hidden="true"></i> </a> </span> </th>
+                        {% elif pipes.val == "X" and pipes.pipe.buyable%}
+                            <td style="background-color: {{pipes.pipe.get_color}};"> <span> <a href="{{ pipes.pipe.get_absolute_url }}"><i class="fas fa-circle" style="color: white;" aria-hidden="true"></i> </a> </span> </td>
+                        {% elif pipes.val == "X" %}
+                            <td style="background-color: white;"> <span> <a href="{{ pipes.pipe.get_absolute_url }}"><i class="fa fa-user-o" style="color: {{pipes.pipe.get_color}};" aria-hidden="true"></i> </a> </span> </td>
+                        {% else %}
+                            <td> <span> <i class="fa fa-ban" style="color: black;" aria-hidden="true"></i> </span> </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container px-5">
+      <div class="text-center">
+        <h3 >Table Legend</h3>
+      </div>
+      <div class="table-responsive text-center" style="border: none; background-color: white">
+        <table class="table" style="border: none;">
+          <thead style="border-style : hidden!important;">
+            <tr>
+              <th style="background-color: coral;" width="40px"> <span> <a href="{{ pipes.pipe.get_absolute_url }}"><i class="fas fa-circle" style="color: white;" aria-hidden="true"></i> </a> </span> </th>
+              <th style="min-width: 120px;"> Available </th>
+              <th style="background-color: white;" width="40px"> <span> <a href="{{ pipes.pipe.get_absolute_url }}"><i class="fa fa-user-o" style="color: coral;" aria-hidden="true"></i> </a> </span> </th>
+              <th style="min-width: 120px;"> Purchased </th>
+              <th style="background-color: rgba(255, 0, 0, 0.2);" width="40px"> <span> <a href="{{ pipes.pipe.get_absolute_url }}"><i class="fa fa-user-o" style="color: black;" aria-hidden="true"></i> </a> </span> </th>
+              <th style="min-width: 120px;"> Reserved </th>
+              <th width="40px"> <span> <a href="{{ pipes.pipe.get_absolute_url }}"><i class="fa fa-ban" style="color: black;" aria-hidden="true"></i> </a> </span> </th>
+              <th style="min-width: 130px;"> Not Available </th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="py-2">
+  </div>
+
+
+{% endblock %}
+
+<!-- this can be re-done later to its own block / extend the JS block. -->
+{% block stripe %}
+
+<script>
+    $('select').on('change', function() {
+        window.location.href = this.value;
+    });
+</script>
+
+{% endblock %}

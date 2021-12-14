@@ -1,0 +1,10 @@
+### Copyright
+
+This project is the implementation part of my bachelor thesis that can be found here -> **Currently, there is no link to the thesis, will be updated once it exists**
+Therefore, feel free to use it and threat it as an open-source project!
+
+### Additional copyright (some parts of a code)
+
+The project was developed (at the beginning) using the following tutorial: https://www.udemy.com/course/python-ecommerce-build-a-django-ecommerce-web-application/
+Therefore, the project structure and some of the parts of a code are heavily inspired by the tutorial.
+(Since the project from tutorial is also freely available on github, the licence should be the same)

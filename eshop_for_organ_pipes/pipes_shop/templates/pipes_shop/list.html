@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- <form> -->
+                        <div class="form-group">
+
+                            {% include 'search/search.html' %}
+
+                            <div class="py-4 d-flex justify-content-center">
+                                <h5 style="margin-bottom: 0"> advanced search </h5>
+                            </div>
+
+                            {% include 'search/filterboxes.html' %}
+
+                        </div>
+                    <!-- </form> -->
+                </div>
+
+
+                <div class="col-md-8">
+                    <div class="py-3">
+                    </div>
+
+                    <div class="row">
+                        {% for obj in object_list %}
+                            <div class="col-md-6 col-12">
+                                {% include 'pipes_shop/snippets/card.html' with instance=obj cart=cart %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <div class="py-3">
+                    </div>
+
+        {% if is_paginated %}
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ page_obj.previous_page_number }}&{{ get_copy.urlencode }}">Prev</a></li>
+                    {% endif %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}
+                        / {{ page_obj.paginator.num_pages }}</a></li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&{{ get_copy.urlencode }}">Next</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+
+    </div>
+
+
+
+
+
+{% endblock %}

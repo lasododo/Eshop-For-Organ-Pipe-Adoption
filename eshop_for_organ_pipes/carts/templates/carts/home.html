@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block divider %}{% endblock %}
+
+{% block content %}
+
+
+
+    {% if cart.pipes.exists %}
+
+        <div class="py-5"></div>
+    <div class="py text-center text-dark">
+        <h1> Cart </h1>
+    </div>
+
+    <style>
+            .font_for_bold { font-size: 16px; }
+            .font_for_normal { font-size: 14px; }
+            .font_for_price { font-size: 14px; }
+            .width_pipes { width: 55%; }
+            .width_price { width: 25%; }
+
+        @media screen and (min-width: 770px) {
+            .font_for_bold { font-size: 17px; }
+            .font_for_normal { font-size: 14px; }
+            .font_for_price { font-size: 14px; }
+            .width_pipes { width: 55%; }
+            .width_price { width: 20%; }
+        }
+
+        @media screen and (min-width: 970px) {
+            .font_for_bold { font-size: 17px; }
+            .font_for_normal { font-size: 14px; }
+            .font_for_price { font-size: 15px; }
+            .width_pipes { width: 55%; }
+            .width_price { width: 20%; }
+        }
+
+        @media screen and (min-width: 1170px) {
+            .font_for_bold { font-size: 18px; }
+            .font_for_normal { font-size: 14px; }
+            .font_for_price { font-size: 15px; }
+            .width_pipes { width: 60%; }
+            .width_price { width: 15%; }
+        }
+
+        @media screen and (min-width: 1400px) {
+            .font_for_bold { font-size: 19px; }
+            .font_for_normal { font-size: 14px; }
+            .font_for_price { font-size: 16px; }
+            .width_pipes { width: 65%; }
+            .width_price { width: 10%; }
+        }
+
+        @media screen and (min-width: 2000px) {
+            .font_for_bold { font-size: 21px; }
+            .font_for_normal { font-size: 14px; }
+            .font_for_price { font-size: 16px; }
+            .width_pipes { width: 65%; }
+            .width_price { width: 10%; }
+        }
+
+
+
+        </style>
+
+        <div class="py">
+            <div class="container">
+                <div class="row">
+                    <div class="table-responsive text-center">
+                        <table class="table cart-table font_for_price">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center" style="width: 10%">#</th>
+                                <th style="padding-left: 1px; padding-right: 1px" class="text-center width_pipes">Organ Pipe</th>
+                                <th style="padding-left: 1px; padding-right: 1px" class="text-center width_price">Price</th>
+                                <th style="padding-left: 1px; padding-right: 1px; width: 10%" class="text-center"></th>
+                            </tr>
+                            </thead>
+                            <tbody class="cart-body">
+
+
+                            {% for item in cart.pipes.all %}
+                                <tr class="cart-product">
+                                    <th class="text-center" style="vertical-align: middle"> {{ forloop.counter }}.</th>
+                                    <th class="text-left" style="vertical-align: middle">
+                                        <a href="{{ item.get_absolute_url }}">
+                                            <h6 class="font_for_bold" style="margin: 0; font-weight: bold"> {{ item.registry }} / {{ item.note }}  </h6>
+                                            <h6 class="font_for_normal" style="margin: 0; font-weight: normal"> ({{ item.manual }}) </h6>
+                                        </a>
+                                    </th>
+                                    <th class="text-left" style="vertical-align: middle"> {{ item.price }} CZK </th>
+                                    <th class="text-center" style="vertical-align: middle">  {% include 'carts/snippets/remove-product.html' with pipe_id=item.id %} </th>
+                                </tr>
+                            {% endfor %}
+
+
+                            <tr>
+                                <th class="text-center"></th>
+                                <th class="text-center"></th>
+                                <th class="text-center"></th>
+                                <th class="text-center"></th>
+                            </tr>
+                            <tr>
+                                <th class="text-right" colspan="2"> Subtotal:</th>
+                                <th class="text-left" colspan="2"><span class="cart-subtotal">{{ cart.sub_total }} CZK</span></th>
+                            </tr>
+                            <tr>
+                                <th class="text-right" colspan="2"> Total:</th>
+                                <th class="text-left" colspan="2"><span class="cart-total">{{ cart.total }} CZK</span></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                <div class="col-xl-7 col-md-5"></div>
+                <div class="col-xl-5 col-md-7">
+
+
+                <div class="py-3 d-flex justify-content-center">
+                    {% if cart.total < 1_000_000 %}
+                        <a class="btn btn-success font_for_price" style="padding: 15px" href="{% url "cart:checkout" %}"> <b>Checkout</b> {{ cart.total }} CZK</a>
+                    {% else %}
+                        <p>You cannot purchase the pipes for more than 1000000 CZK </p>
+                    {% endif %}
+                </div>
+
+                </div>
+                </div>
+
+                <div class="py-xl-5 py-3"></div>
+                <div class="py-xl-5"></div>
+            </div>
+        </div>
+
+        <div class="cart-item-remove-form" style="display: none">
+            {% include 'carts/snippets/remove-product.html' %}
+        </div>
+
+    {% else %}
+
+
+        <style style="">
+    .center-container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      position: fixed;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <div class="py-lg-5 py-sm-2 d-flex center-container text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="font-size: 24px;">
+          <i class="fas fa-shopping-cart fa-10x" aria-hidden="true" ></i>
+          <h1>Your cart is EMPTY</h1>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+  </div>
+
+    {% endif %}
+
+{% endblock %}
